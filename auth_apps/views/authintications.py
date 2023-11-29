@@ -49,7 +49,7 @@ class LoginView(View):
                 if user.check_password(password):
                     login(request, user)
                     messages.success(request, f'Welcome, {email}!')
-                    return redirect('home')
+                    return redirect('dashboard')
                 else:
                     messages.error(
                         request, 'Invalid email or password. Please try again.')

@@ -17,12 +17,29 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import DashboardView
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Event Registration API",
+        default_version='v1',
+        description="Event Registration",
+        terms_of_service="",
+        contact=openapi.Contact(email=""),
+        license=openapi.License(name=""),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('auth_apps.urls')),
     path('event/', include('event_manager.urls')),
+    path('api/', include('api.urls')),
     path('', DashboardView.as_view(),
             name='dashboard'
         ),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
