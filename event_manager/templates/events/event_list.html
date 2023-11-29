@@ -1,17 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 class="mb-4">Event List</h1>
-    {% for event in events %}
-        <div class="card mb-4">
-            <div class="card-body">
-                <h3>{{ event.title }}</h3>
-                <p class="card-text">Description: {{ event.description }}</p>
-                <p class="card-text">Date and Time: {{ event.date }} at {{ event.time }}</p>
-                <p class="card-text">Location: {{ event.location_name }}</p>
-                <p class="card-text">Available Slots: {{ event.available_slots }} / {{ event.total_slots }}</p>
-                <a href="{% url 'register_event' event.id %}" class="btn btn-primary">Register</a>
-            </div>
+<h1 class="mb-4">Available Event</h1>
+<div class="row">
+{% for event in events %}
+<div class="col-md-3 col-lg-3 col-sm-6">
+    <div class="card text-center mt-4">
+        <div class="card-header">
+            Event
         </div>
-    {% endfor %}
+        <div class="card-body">
+            <h5 class="card-title">{{ event.title }}</h5>
+            <p class="card-text"><strong>Description:</strong> {{ event.description }}</p>
+            <p class="card-text"><strong>Event Date:</strong> {{ event.date|date:'d-M-Y' }} </p>
+            <p class="card-text"><strong>Time:</strong> {{ event.time }}</p>
+            <p class="card-text"><strong>Location: </strong>{{ event.location_name }}</p>
+            <button type="button" class="btn btn-secondary btn-sm">
+                Available Slots: <span class="badge text-light">{{ event.available_slots }}</span>
+            </button>
+        </div>
+        <div class="card-footer text-body-secondary d-grid gap-2">
+            <a  href="{% url 'register_event' event.id %}" class="btn btn-primary">Register</a>
+            
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+<a href="{% url 'dashboard' %}" class="btn btn-secondary mt-5">Back to Dashboard</a>
 {% endblock %}

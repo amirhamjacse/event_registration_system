@@ -1,11 +1,24 @@
 {% extends "base.html" %}
-
+{% load widget_tweaks %}
 {% block content %}
+<div class="container mt-5">
     <h1 class="mb-4">Register for Event: {{ event.title }}</h1>
-    <form method="post" class="mb-4">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-    <a href="{% url 'event_list' %}" class="btn btn-secondary">Back to Event List</a>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% render_field form.event|add_class:'form-control'|attr:'hidden' %}
+                        <h5>
+                            Are you sure to want to register for: {{ event.title }}
+                        </h5>
+                        <button type="submit" class="btn btn-primary mt-4">Yes, Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'event_list' %}" class="btn btn-secondary mt-3">Back to Event List</a>
+</div>
 {% endblock %}

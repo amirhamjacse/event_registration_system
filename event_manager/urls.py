@@ -10,5 +10,4 @@ urlpatterns = [
          views.RegisterEventView.as_view(),
          name='register_event'
         ),
-    # path('dashboard/', DashboardView.as_view(), name='dashboard'),
 ]
