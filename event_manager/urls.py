@@ -10,4 +10,12 @@ urlpatterns = [
          views.RegisterEventView.as_view(),
          name='register_event'
         ),
+    path('<int:event_id>/unregister/',
+         views.UnregisterEventView.as_view(),
+         name='unregister_event'
+        ),
+    path('<int:pk>/details/',
+         views.EventDetailsView.as_view(),
+         name='events_details'
+        ),
 ]

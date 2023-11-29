@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Unregister from Event: {{ event.title }}</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>Are you sure you want to unregister from the event "{{ event.title }}"?</p>
+                        <button type="submit" class="btn btn-danger">Unregister</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Back to My Event List</a>
+</div>
+{% endblock %}

@@ -1,12 +1,17 @@
 # events/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin, UserPassesTestMixin
+)
 from django.contrib import messages
 from django.views import View
+from django.views.generic import DetailView
+from django.db.models import Q
 from event_manager.models import Event, EventRegistration
-from event_manager.forms import EventForm, RegistrationForm
-
+from event_manager.forms import (
+    EventForm, RegistrationForm, UnregistrationForm
+)
 
 class EventListView(
     LoginRequiredMixin, View,
@@ -18,9 +23,24 @@ class EventListView(
         return self.request.user.is_active
 
     def get(self, request):
-        events = Event.objects.all()
+        search_query = request.GET.get('search', '')
+
+        query = Event.objects.filter(
+            is_active=True
+        )
+
+        if search_query:
+            query = query.filter(
+                Q(title__icontains=search_query)|
+                Q(location_name__icontains=search_query)
+            )
+
+        context = {
+            'events': query,
+            'search_query': search_query
+        }
         return render(
-            request, self.template_name, {'events': events}
+            request, self.template_name, context
         )
 
 
@@ -64,3 +84,64 @@ class RegisterEventView(
         return render(
             request, self.template_name, {'event': event, 'form': form}
         )
+
+
+class UnregisterEventView(
+    LoginRequiredMixin, UserPassesTestMixin, View
+):
+    template_name = 'events/unregister_event.html'
+
+    def test_func(self):
+        return self.request.user.is_active
+
+    def get(self, request, event_id):
+        event = Event.objects.get(pk=event_id)
+        user_registration = EventRegistration.objects.filter(
+            event=event, user=request.user
+        ).first()
+
+        if user_registration:
+            form = UnregistrationForm(initial={'event': event})
+            return render(
+                request, self.template_name, {'event': event, 'form': form}
+            )
+        else:
+            messages.error(
+                request, 'You are not registered for this event.'
+            )
+            return redirect('event_list')
+
+    def post(self, request, event_id):
+        event = Event.objects.get(pk=event_id)
+        user_registration = EventRegistration.objects.filter(
+            event=event, user=request.user
+        ).first()
+
+        if user_registration:
+            # Unregister the user from the event
+            user_registration.delete()
+            event.available_slots += 1
+            event.save()
+            messages.success(
+                request, 'Successfully unregistered from the event.'
+            )
+            return redirect('dashboard')
+        else:
+            messages.error(
+                request, 'You are not registered for this event.'
+            )
+
+        return render(
+            request, self.template_name, {'event': event, 'form': form}
+        )
+
+
+class EventDetailsView(
+    LoginRequiredMixin, UserPassesTestMixin, DetailView
+):
+    model = Event
+    template_name = 'events/event_details.html'
+    context_object_name = 'event'
+
+    def test_func(self):
+        return self.request.user.is_active

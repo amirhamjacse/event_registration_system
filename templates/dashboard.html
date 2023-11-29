@@ -40,8 +40,8 @@
                 <td>{{ registered_event.event.date|date:'d-M-Y'|default_if_none:"-" }}</td>
                 <td>{{ registered_event.event.time|default_if_none:"-" }}</td>
                 <td>
-                    {% comment %} <a href="{% url 'event_details' task.pk %}" class="btn btn-info btn-sm">Details</a>
-                    <a href="{% url 'event_delete' task.pk %}" class="btn btn-danger btn-sm">Delete</a> {% endcomment %}
+                    <a href="{% url 'events_details' registered_event.event.pk %}" class="btn btn-info btn-sm">Details</a>
+                    <a href="{% url 'unregister_event' registered_event.event.pk %}" class="btn btn-danger btn-sm">Unregister</a> 
                 </td>
             </tr>
 

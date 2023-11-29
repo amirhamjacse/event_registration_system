@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<div class="container mt-5">
+    <h4 class="mb-4">Event Details</h4>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card text-center">
+                <div class="card-header">
+                  Event
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ event.title }}</h5>
+                  <p class="card-text"><strong>Details: </strong>{{ event.description }}</p>
+                  <p><strong>Date:</strong> {{ event.date }}</p>
+                  <p><strong>Time:</strong> {{ event.time }}</p>
+                  <p><strong>Location:</strong> {{ event.location_name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="container mt-5">
+    
+    <!-- Add more details as needed -->
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Back to My Event List</a>
+</div>
+{% endblock %}
