@@ -4,16 +4,6 @@ from django.contrib import messages
 from auth_apps.forms import RegistrationForm, LoginForm
 from django.views import View
 from auth_apps.models import CustomUser
-from django.contrib.auth.mixins import (
-    LoginRequiredMixin,
-    PermissionRequiredMixin
-)
-
-class HomeView(LoginRequiredMixin, View):
-    template_name = 'home.html'
-
-    def get(self, request):
-        return render(request, self.template_name)
 
 
 class RegistrationView(View):

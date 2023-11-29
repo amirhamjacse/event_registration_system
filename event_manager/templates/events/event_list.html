@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="mb-4">Event List</h1>
+    {% for event in events %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3>{{ event.title }}</h3>
+                <p class="card-text">Description: {{ event.description }}</p>
+                <p class="card-text">Date and Time: {{ event.date }} at {{ event.time }}</p>
+                <p class="card-text">Location: {{ event.location_name }}</p>
+                <p class="card-text">Available Slots: {{ event.available_slots }} / {{ event.total_slots }}</p>
+                <a href="{% url 'register_event' event.id %}" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
