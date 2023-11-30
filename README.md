@@ -47,7 +47,7 @@ Create a superuser for admin access (optional):
 
 Load the fixture (sample data):
 - Go to root folder /event_register_fixture.json
-- python manage.py loaddata Event_register_fixture
+- python manage.py loaddata event_register_fixture.json
 - all user password is '@Event123'
 - admin email after load fixture admin@example.com, password: '@123adminxyz'
 
