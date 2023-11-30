@@ -1,17 +1,38 @@
 # events/views.py
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import (
     LoginRequiredMixin, UserPassesTestMixin
 )
 from django.contrib import messages
 from django.views import View
-from django.views.generic import DetailView
+from django.views.generic import DetailView, CreateView
 from django.db.models import Q
 from event_manager.models import Event, EventRegistration
 from event_manager.forms import (
     EventForm, RegistrationForm, UnregistrationForm
 )
+
+
+class EventCreateView(View):
+    template_name = 'events/create_event.html'
+    success_url = reverse_lazy('event_list') 
+
+    def get(self, request, *args, **kwargs):
+        form = EventForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = EventForm(request.POST)
+        print(form)
+        if form.is_valid():
+            event = form.save()
+            print('save')
+            return redirect(self.success_url)
+        print('not')
+        return render(request, self.template_name, {'form': form})
+
 
 class EventListView(
     LoginRequiredMixin, View,

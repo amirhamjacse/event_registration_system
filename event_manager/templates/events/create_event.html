@@ -1,0 +1,22 @@
+<!-- events/templates/events/create_event.html -->
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+    <h1>Create Event</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label> Title </label>
+        {% render_field form.title|add_class:'form-control' %}
+        <label> Description </label>
+        {% render_field form.description|add_class:'form-control' %}
+         <label> Date </label>
+        {% render_field form.date|add_class:'form-control'|attr:'type:date' %}
+         <label> Time </label>
+        {% render_field form.time|add_class:'form-control'|attr:'type:time' %}
+         <label> Location </label>
+        {% render_field form.location_name|add_class:'form-control' %}
+         <label> Total Slot </label>
+        {% render_field form.available_slots|add_class:'form-control' %}
+        <button type="submit" class="btn btn-primary">Create Event</button>
+    </form>
+{% endblock %}

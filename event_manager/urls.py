@@ -3,6 +3,10 @@ from django.urls import path
 from event_manager import views
 
 urlpatterns = [
+    path('create/',
+         views.EventCreateView.as_view(),
+         name='event_create'
+        ),
     path('list/', views.EventListView.as_view(),
          name='event_list'
         ),

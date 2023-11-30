@@ -15,6 +15,7 @@ class EventForm(forms.ModelForm):
             'available_slots'
         ]
 
+
 class RegistrationForm(forms.ModelForm):
     class Meta:
         model = EventRegistration

@@ -13,6 +13,9 @@
                 </form>
             </div>
             <div class="col-md-6 text-end">
+                {% if request.user.is_staff %}
+                <a href="{% url 'event_create' %}" class="btn btn-primary">Create Events</a>
+                {% endif %}
             </div>
         </div>
     </div>
