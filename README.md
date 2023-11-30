@@ -37,6 +37,7 @@ Before you begin, ensure you have met the following requirements:
 Install project dependencies:
 - pip install -r requirements.txt
 - Create a PostgreSQL database and configure the project's .env file. You can use the provided .env.example as a template, You have to copy .env.example and remove .example.
+- Then you have to configure .env using your database credential.
 
 Apply database migrations:
 - python manage.py migrate
@@ -45,10 +46,11 @@ Create a superuser for admin access (optional):
 - python manage.py createsuperuser
 
 Load the fixture (sample data):
-- Go to this Location event_manager/fixtures/event_register_fixture.json
-- all user password is '@Event123'
-- admin email after load fixture admin@example.com, password: '@123adminxyz
+- Go to root folder /event_register_fixture.json
 - python manage.py loaddata Event_register_fixture
+- all user password is '@Event123'
+- admin email after load fixture admin@example.com, password: '@123adminxyz'
+
 
 Run the development server:
 - python manage.py runserver
