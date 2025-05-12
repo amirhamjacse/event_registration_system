@@ -56,3 +56,4 @@ class UserRegisteredEventsView(generics.ListAPIView):
         return Event.objects.filter(
             eventregistration__user=user
         )
+
